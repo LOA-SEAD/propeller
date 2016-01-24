@@ -1,2 +1,7 @@
 .idea
 *.iml
+
+.gradle
+build
+!gradle-wrapper.jar
+.gradletasknamecache
