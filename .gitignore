@@ -5,3 +5,5 @@
 build
 !gradle-wrapper.jar
 .gradletasknamecache
+
+.DS_Store
