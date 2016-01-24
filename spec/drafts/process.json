@@ -1,0 +1,16 @@
+{
+	"name": "Forca",
+	"version": 1,
+
+	"tasks": [{
+		"name": "Banco de Questões",
+		"description": "Criar/editar/selecionar um banco de questões para o jogo.",
+		"type": "text_database",
+		"dependencies": null,
+		"outputs": [{
+			"name": "perguntas.json",
+			"type": "json",
+			"path": "/json"
+		}]
+	}]
+}
