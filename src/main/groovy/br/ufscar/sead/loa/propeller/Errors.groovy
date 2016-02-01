@@ -5,5 +5,5 @@ package br.ufscar.sead.loa.propeller
  * https://github.com/matheuss
  */
 abstract class Errors {
-    static int PROCESS_URI_NOT_UNIQUE = 1
+    static int PROCESS_URI_NOT_UNIQUE = 409
 }
