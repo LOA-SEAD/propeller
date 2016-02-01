@@ -67,7 +67,7 @@ class Propeller {
         def uri = doc.getString('uri')
 
         // will be true if a process with the given uri already exists on the database
-        if (!collection.count(new Document('uri': uri))) {
+        if (collection.count(new Document('uri': uri))) {
             return Errors.PROCESS_URI_NOT_UNIQUE
         }
 
