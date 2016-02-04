@@ -1,5 +1,6 @@
 package br.ufscar.sead.loa.propeller
 
+import br.ufscar.sead.loa.propeller.tmp.User
 import com.mongodb.MongoClient
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.MongoDatabase
@@ -19,6 +20,12 @@ class Propeller {
     Map options
     boolean configured
     MongoDatabase db
+
+    /**
+     *
+     * @param options: dbName, wipeDb, userId
+     * @return
+     */
 
     Propeller init(Map options) {
         if (this.configured) {
@@ -76,10 +83,38 @@ class Propeller {
         collection.insertOne(doc)
     }
 
-    def static main(args) {
-        Propeller.instance.init([dbName: 'propeller=', 'wipeDb': true])
-        def r = Propeller.instance.deploy(new File('spec/drafts/process.json'))
-        println r
+    /**
+     * TODO: find a way to allow task delegation here
+     * @param uri
+     * @param owner
+     * @return
+     */
+    def instantiate(String uri, Object owner) {
+        def process = this.db.getCollection('process_definition').find(new Document("uri", uri)).first()
 
+        if (!process) {
+            return Errors.PROCESS_NOT_FOUND
+        }
+
+        // Create a ID for the instance – without this, Mongo will reject a second instance
+        // TODO: check if this affirmation is really true
+        process.put("_id", new ObjectId())
+
+        // When a process is instantiated, each task should have an id
+        def tasks = process.get('tasks') as ArrayList<Document>
+        tasks.each { task ->
+            task.put('id', new ObjectId())
+        }
+
+        def idProperty = this.options.userId == null? "id" : this.options.userId
+        process.put('ownerId', owner[idProperty])
+
+        db.getCollection("process_instance").insertOne(process)
+    }
+
+    def static main(args) {
+        Propeller.instance.init([dbName: 'propeller', 'wipeDb': true])
+        Propeller.instance.deploy(new File('spec/drafts/process.json'))
+        println Propeller.instance.instantiate('forca', new User(1))
     }
 }
