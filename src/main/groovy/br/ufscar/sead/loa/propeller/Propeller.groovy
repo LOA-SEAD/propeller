@@ -78,8 +78,6 @@ class Propeller {
             return Errors.PROCESS_URI_NOT_UNIQUE
         }
 
-        doc.put('uri', uri)
-
         collection.insertOne(doc)
     }
 
