@@ -1,12 +1,13 @@
 package br.ufscar.sead.loa.propeller
 
+import br.ufscar.sead.loa.propeller.domain.ProcessDefinition
 import br.ufscar.sead.loa.propeller.tmp.User
+import com.mongodb.DuplicateKeyException
 import com.mongodb.MongoClient
-import com.mongodb.client.MongoCollection
-import com.mongodb.client.MongoDatabase
-import com.mongodb.client.model.IndexOptions
 import org.bson.Document
 import org.bson.types.ObjectId
+import org.mongodb.morphia.Datastore
+import org.mongodb.morphia.Morphia
 
 import java.util.logging.Logger
 import java.util.logging.Level
@@ -19,7 +20,7 @@ import java.util.logging.Level
 class Propeller {
     Map options
     boolean configured
-    MongoDatabase db
+    Datastore ds
 
     /**
      *
@@ -41,15 +42,15 @@ class Propeller {
         Logger mongoLogger = Logger.getLogger( "org.mongodb.driver" );
         mongoLogger.setLevel(Level.SEVERE);
 
-        def client = new MongoClient()
-        this.db = client.getDatabase(options.dbName as String)
+        Morphia morphia = new Morphia()
+
+        morphia.mapPackage("br.ufscar.sead.loa.propeller.domain")
+        this.ds = morphia.createDatastore(new MongoClient(), options.dbName as String)
+        this.ds.ensureIndexes()
 
         if (options.wipeDb == true) {
-            db.drop()
+            this.ds.getDB().dropDatabase()
         }
-
-        // uri should be an (unique) index
-        db.getCollection('process_definition').createIndex(new Document('uri', 1), new IndexOptions().unique(true))
 
         this.options = options
 
@@ -63,22 +64,22 @@ class Propeller {
     /**
      * TODO: improve error/success return values/logic
      * idea: return a ProcessDefinition with #getErrors() #deployed() etc.
-     * @see br.ufscar.sead.loa.propeller.ProcessDefinition
+     * @see br.ufscar.sead.loa.propeller.domain.ProcessDefinition
      */
-    def deploy(String json) {
-        def collection = this.db.getCollection('process_definition')
+    ProcessDefinition deploy(String json) {
         def doc = Document.parse(json)
+        def pd = new ProcessDefinition(doc)
 
-        // TODO: validation
-
-        def uri = doc.getString('uri')
-
-        // will be true if a process with the given uri already exists on the database
-        if (collection.count(new Document('uri': uri))) {
-            return Errors.PROCESS_URI_NOT_UNIQUE
+        if (pd.validate()) {
+            try {
+                this.ds.save(pd)
+                pd.deployed = true
+            } catch (DuplicateKeyException ignored) {
+                // TODO: set errors in ProcessDefinition instance
+            }
         }
 
-        collection.insertOne(doc)
+        return pd
     }
 
     /**
@@ -88,6 +89,8 @@ class Propeller {
      * @return
      */
     def instantiate(String uri, Object owner) {
+        return // Temporary – code below doesn't work anymore
+
         def process = this.db.getCollection('process_definition').find(new Document("uri", uri)).first()
 
         if (!process) {
