@@ -20,6 +20,8 @@ class TaskDefinition extends Mistakable {
     ArrayList<Document> outputs // TODO: create a TaskOutput class
 
 
+    TaskDefinition() {}
+
     TaskDefinition(Document doc) {
         this.name = doc.getString("name")
         this.description = doc.getString("description")

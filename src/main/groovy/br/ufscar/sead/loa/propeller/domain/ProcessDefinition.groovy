@@ -33,6 +33,8 @@ class ProcessDefinition extends Mistakable {
     @Embedded
     ArrayList<TaskDefinition> tasks
 
+    ProcessDefinition() {}
+
     ProcessDefinition(Document doc) {
         this.id = doc.getObjectId("_id")
         this.name = doc.getString("name")
