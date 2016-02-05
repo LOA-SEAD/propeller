@@ -10,4 +10,4 @@ A workflow engine written in Groovy
 - [ ] Implement a better validation system (probably JSON Schema)
 
 # DONE
-- [X] Validate an process.json before deployment
+- [X] Validate a process.json before deployment
