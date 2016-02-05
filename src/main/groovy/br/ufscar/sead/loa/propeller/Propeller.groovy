@@ -57,8 +57,8 @@ class Propeller {
         return this
     }
 
-    def deploy(File json) {
-        deploy(json.text)
+    def deploy(File json, Object ownerId) {
+        deploy(json.text, ownerId)
     }
 
     /**
@@ -66,11 +66,12 @@ class Propeller {
      * idea: return a ProcessDefinition with #getErrors() #deployed() etc.
      * @see br.ufscar.sead.loa.propeller.domain.ProcessDefinition
      */
-    ProcessDefinition deploy(String json) {
+    ProcessDefinition deploy(String json, Object ownerId) {
         def doc = Document.parse(json)
         def pd = new ProcessDefinition(doc)
 
         if (pd.validate()) {
+            pd.ownerId = ownerId
             try {
                 this.ds.save(pd)
                 pd.deployed = true
@@ -113,9 +114,11 @@ class Propeller {
         db.getCollection("process_instance").insertOne(process)
     }
 
+
+
     def static main(args) {
         Propeller.instance.init([dbName: 'propeller', 'wipeDb': true])
-        Propeller.instance.deploy(new File('spec/drafts/process.json'))
+        Propeller.instance.deploy(new File('spec/drafts/process.json'), 1)
         println Propeller.instance.instantiate('forca', new User(1))
     }
 }

@@ -29,6 +29,7 @@ class ProcessDefinition extends Mistakable {
     int version
 
     transient boolean deployed
+    Object ownerId
 
     @Embedded
     ArrayList<TaskDefinition> tasks
