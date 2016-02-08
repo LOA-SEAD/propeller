@@ -37,7 +37,6 @@ class ProcessDefinition extends Mistakable {
     ProcessDefinition() {}
 
     ProcessDefinition(Document doc) {
-        this.id = doc.getObjectId("_id")
         this.name = doc.getString("name")
         this.uri = doc.getString("uri")
         this.version = doc.getInteger("version")
