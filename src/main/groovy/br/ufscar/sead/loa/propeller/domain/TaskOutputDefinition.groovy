@@ -10,14 +10,14 @@ import org.mongodb.morphia.annotations.Embedded
  * https://github.com/matheuss
  */
 @Embedded
-class TaskOutput extends Mistakable{
+class TaskOutputDefinition extends Mistakable{
     String name
     String type
     String path
 
-    TaskOutput() {}
+    TaskOutputDefinition() {}
 
-    TaskOutput(Document doc) {
+    TaskOutputDefinition(Document doc) {
         this.name = doc.getString('name')
         this.type = doc.getString('type')
         this.path = doc.getString('path')

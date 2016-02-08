@@ -22,7 +22,7 @@ class TaskDefinition extends Mistakable {
     String description
     String type // TODO: change to int
     // dependencies TODO
-    ArrayList<TaskOutput> outputs // TODO: create a TaskOutput class
+    ArrayList<TaskOutputDefinition> outputs
 
 
     TaskDefinition() {}
@@ -35,10 +35,10 @@ class TaskDefinition extends Mistakable {
 
         ArrayList<Document> outputs = doc.get('outputs') as ArrayList<Document>
 
-        this.outputs = new ArrayList<TaskOutput>()
+        this.outputs = new ArrayList<TaskOutputDefinition>()
 
         outputs.each {output ->
-            this.outputs.add(new TaskOutput(output))
+            this.outputs.add(new TaskOutputDefinition(output))
         }
 
         Propeller.instance.ds.save(this)
