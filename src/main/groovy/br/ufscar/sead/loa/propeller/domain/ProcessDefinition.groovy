@@ -4,13 +4,13 @@ import br.ufscar.sead.loa.propeller.util.Helper
 import br.ufscar.sead.loa.propeller.util.Mistakable
 import org.bson.Document
 import org.bson.types.ObjectId
-import org.mongodb.morphia.annotations.Embedded
 import org.mongodb.morphia.annotations.Entity
 import org.mongodb.morphia.annotations.Field
 import org.mongodb.morphia.annotations.Index
 import org.mongodb.morphia.annotations.IndexOptions
 import org.mongodb.morphia.annotations.Indexes
 import org.mongodb.morphia.annotations.Id
+import org.mongodb.morphia.annotations.Reference
 
 /**
  * Created by matheus on 2/4/16.
@@ -31,7 +31,7 @@ class ProcessDefinition extends Mistakable {
     transient boolean deployed
     Object ownerId
 
-    @Embedded
+    @Reference
     ArrayList<TaskDefinition> tasks
 
     ProcessDefinition() {}
