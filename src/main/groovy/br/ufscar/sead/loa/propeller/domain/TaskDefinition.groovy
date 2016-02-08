@@ -22,7 +22,7 @@ class TaskDefinition extends Mistakable {
     String description
     String type // TODO: change to int
     // dependencies TODO
-    ArrayList<Document> outputs // TODO: create a TaskOutput class
+    ArrayList<TaskOutput> outputs // TODO: create a TaskOutput class
 
 
     TaskDefinition() {}
@@ -32,7 +32,14 @@ class TaskDefinition extends Mistakable {
         this.name = doc.getString("name")
         this.description = doc.getString("description")
         this.type = doc.getString("type")
-        outputs = doc.get("outputs") as ArrayList<Document>
+
+        ArrayList<Document> outputs = doc.get('outputs') as ArrayList<Document>
+
+        this.outputs = new ArrayList<TaskOutput>()
+
+        outputs.each {output ->
+            this.outputs.add(new TaskOutput(output))
+        }
 
         Propeller.instance.ds.save(this)
     }
@@ -43,8 +50,8 @@ class TaskDefinition extends Mistakable {
         if (!this.outputs) return false
 
         def invalidOutput = this.outputs.find { output ->
-            return (false in [Helper.valid(output.getString("name")), Helper.valid(output.getString("type")),
-                              Helper.valid(output.getString("path"))])
+            // This Closure will return null if all outputs are valid; Otherwise, will return the first invalid task
+            return !output.validate()
         }
 
         return !invalidOutput
