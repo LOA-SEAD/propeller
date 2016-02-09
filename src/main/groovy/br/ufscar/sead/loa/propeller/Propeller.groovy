@@ -66,12 +66,11 @@ class Propeller {
      * idea: return a ProcessDefinition with #getErrors() #deployed() etc.
      * @see br.ufscar.sead.loa.propeller.domain.ProcessDefinition
      */
-    ProcessDefinition deploy(String json, Object ownerId) {
+    ProcessDefinition deploy(String json, long ownerId) {
         def doc = Document.parse(json)
-        def pd = new ProcessDefinition(doc)
+        def pd = new ProcessDefinition(doc, ownerId)
 
         if (pd.validate()) {
-            pd.ownerId = ownerId
             try {
                 this.ds.save(pd)
                 pd.deployed = true

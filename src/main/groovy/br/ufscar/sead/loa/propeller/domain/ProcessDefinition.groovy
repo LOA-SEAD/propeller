@@ -29,17 +29,18 @@ class ProcessDefinition extends Mistakable {
     int version
 
     transient boolean deployed
-    Object ownerId
+    long ownerId
 
     @Reference
     ArrayList<TaskDefinition> tasks
 
     ProcessDefinition() {}
 
-    ProcessDefinition(Document doc) {
+    ProcessDefinition(Document doc, long ownerId) {
         this.name = doc.getString("name")
         this.uri = doc.getString("uri")
         this.version = doc.getInteger("version")
+        this.ownerId = ownerId
 
         ArrayList<Document> tasks = doc.get("tasks") as ArrayList<Document>
 
