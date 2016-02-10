@@ -2,12 +2,9 @@ package br.ufscar.sead.loa.propeller
 
 import br.ufscar.sead.loa.propeller.domain.ProcessDefinition
 import br.ufscar.sead.loa.propeller.domain.ProcessInstance
-import br.ufscar.sead.loa.propeller.domain.TaskInstance
-import br.ufscar.sead.loa.propeller.tmp.User
 import com.mongodb.DuplicateKeyException
 import com.mongodb.MongoClient
 import org.bson.Document
-import org.bson.types.ObjectId
 import org.mongodb.morphia.Datastore
 import org.mongodb.morphia.Morphia
 
