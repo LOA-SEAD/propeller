@@ -15,9 +15,9 @@ import java.util.logging.Logger
 import java.util.logging.Level
 
 /**
-*  Created by matheus on 1/28/16.
-*  https://github.com/matheuss
-*/
+ *  Created by matheus on 1/28/16.
+ *  https://github.com/matheuss
+ */
 @Singleton
 class Propeller {
     Map options
@@ -26,7 +26,7 @@ class Propeller {
 
     /**
      *
-     * @param options: dbName, wipeDb, userId
+     * @param options : dbName, wipeDb, userId
      * @return
      */
 
@@ -41,7 +41,7 @@ class Propeller {
         }
 
         // disable annoying Mongo logs
-        Logger mongoLogger = Logger.getLogger( "org.mongodb.driver" );
+        Logger mongoLogger = Logger.getLogger("org.mongodb.driver");
         mongoLogger.setLevel(Level.SEVERE);
 
         Morphia morphia = new Morphia()
