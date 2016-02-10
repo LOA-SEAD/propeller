@@ -1,6 +1,8 @@
 package br.ufscar.sead.loa.propeller
 
 import br.ufscar.sead.loa.propeller.domain.ProcessDefinition
+import br.ufscar.sead.loa.propeller.domain.ProcessInstance
+import br.ufscar.sead.loa.propeller.domain.TaskInstance
 import br.ufscar.sead.loa.propeller.tmp.User
 import com.mongodb.DuplicateKeyException
 import com.mongodb.MongoClient
@@ -88,36 +90,22 @@ class Propeller {
      * @param owner
      * @return
      */
-    def instantiate(String uri, Object owner) {
-        return // Temporary – code below doesn't work anymore
+    def instantiate(String uri, long ownerId) {
+        def definition = this.ds.createQuery(ProcessDefinition.class).field('uri').equal(uri).get()
 
-        def process = this.db.getCollection('process_definition').find(new Document("uri", uri)).first()
-
-        if (!process) {
+        if (!definition) {
             return Errors.PROCESS_NOT_FOUND
         }
 
-        // Create a ID for the instance – without this, Mongo will reject a second instance
-        // TODO: check if this affirmation is really true
-        process.put("_id", new ObjectId())
+        def instance = new ProcessInstance(definition, ownerId)
+        this.ds.save(instance)
 
-        // When a process is instantiated, each task should have an id
-        def tasks = process.get('tasks') as ArrayList<Document>
-        tasks.each { task ->
-            task.put('id', new ObjectId())
-        }
-
-        def idProperty = this.options.userId == null? "id" : this.options.userId
-        process.put('ownerId', owner[idProperty])
-
-        db.getCollection("process_instance").insertOne(process)
+        return instance
     }
-
-
 
     def static main(args) {
         Propeller.instance.init([dbName: 'propeller', 'wipeDb': true])
         Propeller.instance.deploy(new File('spec/drafts/process.json'), 1)
-        println Propeller.instance.instantiate('forca', new User(1))
+        println Propeller.instance.instantiate('forca', 1)
     }
 }
