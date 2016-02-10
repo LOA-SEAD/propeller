@@ -37,9 +37,9 @@ class Propeller {
             throw new MissingPropertyException('dbName is required')
         }
 
-        // disable annoying Mongo logs
-        Logger mongoLogger = Logger.getLogger("org.mongodb.driver");
-        mongoLogger.setLevel(Level.SEVERE);
+        // Suppress annoying Mongo/Morphia logs
+        Logger.getLogger("org.mongodb.driver").setLevel(Level.SEVERE)
+        Logger.getLogger("org.mongodb.morphia").setLevel(Level.SEVERE)
 
         Morphia morphia = new Morphia()
 
