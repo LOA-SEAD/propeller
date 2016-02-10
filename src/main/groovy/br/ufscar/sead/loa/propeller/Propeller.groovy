@@ -59,7 +59,7 @@ class Propeller {
         return this
     }
 
-    def deploy(File json, Object ownerId) {
+    def deploy(File json, long ownerId) {
         deploy(json.text, ownerId)
     }
 
