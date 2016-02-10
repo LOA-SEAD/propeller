@@ -13,5 +13,21 @@
 			"type": "json",
 			"path": "/json"
 		}]
-	}]
+	},
+      {
+        "name": "Tema",
+        "description": "Criar/editar/selecionar um tema para o jogo.",
+        "type": "image_collection",
+        "dependencies": null,
+        "outputs": [{
+          "name": "inicio.png",
+          "type": "image",
+          "path": "/imgs"
+        },
+          {
+            "name": "papel.png",
+            "type": "image",
+            "path": "/imgs"
+          }]
+      }]
 }
