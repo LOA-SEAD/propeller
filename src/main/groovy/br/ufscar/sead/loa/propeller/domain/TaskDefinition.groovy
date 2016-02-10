@@ -5,6 +5,7 @@ import br.ufscar.sead.loa.propeller.util.Helper
 import br.ufscar.sead.loa.propeller.util.Mistakable
 import org.bson.Document
 import org.bson.types.ObjectId
+import org.mongodb.morphia.annotations.Embedded
 import org.mongodb.morphia.annotations.Entity
 import org.mongodb.morphia.annotations.Id
 
@@ -22,6 +23,7 @@ class TaskDefinition extends Mistakable {
     String description
     String type // TODO: change to int
     // dependencies TODO
+    @Embedded
     ArrayList<TaskOutputDefinition> outputs
 
 
