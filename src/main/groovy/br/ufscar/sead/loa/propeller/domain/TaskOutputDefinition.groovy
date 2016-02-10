@@ -10,7 +10,7 @@ import org.mongodb.morphia.annotations.Embedded
  * https://github.com/matheuss
  */
 @Embedded
-class TaskOutputDefinition extends Mistakable{
+class TaskOutputDefinition extends Mistakable {
     String name
     String type
     String path

@@ -39,7 +39,7 @@ class TaskDefinition extends Mistakable {
 
         this.outputs = new ArrayList<TaskOutputDefinition>()
 
-        outputs.each {output ->
+        outputs.each { output ->
             this.outputs.add(new TaskOutputDefinition(output))
         }
 
