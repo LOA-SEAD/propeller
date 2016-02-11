@@ -2,9 +2,11 @@ package br.ufscar.sead.loa.propeller
 
 import br.ufscar.sead.loa.propeller.domain.ProcessDefinition
 import br.ufscar.sead.loa.propeller.domain.ProcessInstance
+import br.ufscar.sead.loa.propeller.domain.TaskInstance
 import com.mongodb.DuplicateKeyException
 import com.mongodb.MongoClient
 import org.bson.Document
+import org.bson.types.ObjectId
 import org.mongodb.morphia.Datastore
 import org.mongodb.morphia.Morphia
 
@@ -98,6 +100,32 @@ class Propeller {
         this.ds.save(instance)
 
         return instance
+    }
+
+    /**
+     * Find a task based on a given id
+     *
+     * @param taskId the desired task's id
+     * @param userId the id of the user that is trying to access the task
+     * @return the task or null if: no task have such id; the userId != task.process.ownerId
+     * @throws IllegalArgumentException if taskId is null/invalid (See <a href="URL#http://api.mongodb.org/java/current/org/bson/types/ObjectId.html">MongoDB docs</a>)
+     */
+
+    TaskInstance getTask(String taskId, long userId) {
+        ObjectId id
+        try {
+            id = new ObjectId(taskId)
+        } catch (Exception ignored) {
+            throw new IllegalArgumentException("Invalid taskId")
+        }
+
+        def task = this.ds.createQuery(TaskInstance.class).field('id').equal(id).get()
+
+        if (!task || task.process.ownerId != userId) {
+            return null
+        }
+
+        return task
     }
 
     def static main(args) {
