@@ -128,6 +128,17 @@ class Propeller {
         return task
     }
 
+    /**
+     * Find all processes that belongs to a given user
+     *
+     * @param ownerId
+     * @return a list containing all tasks owner by that user or an empty list
+     */
+
+    ArrayList<ProcessInstance> getProcessesByOwner(long ownerId) {
+        return this.ds.createQuery(ProcessInstance.class).field('ownerId').equal(ownerId).asList()
+    }
+
     def static main(args) {
         Propeller.instance.init([dbName: 'propeller', 'wipeDb': true])
         Propeller.instance.deploy(new File('spec/drafts/process.json'), 1)
