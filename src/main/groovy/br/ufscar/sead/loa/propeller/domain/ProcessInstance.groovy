@@ -34,7 +34,7 @@ class ProcessInstance {
         this.completedTasks = new ArrayList<>(definition.tasks.size())
 
         this.definition.tasks.each { task ->
-            this.pendingTasks.add(new TaskInstance(task))
+            this.pendingTasks.add(new TaskInstance(task, this))
         }
     }
 }

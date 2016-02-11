@@ -16,6 +16,8 @@ class TaskInstance {
     @Id
     ObjectId id
     @Reference
+    ProcessInstance process
+    @Reference
     TaskDefinition definition
     int status
     @Embedded
@@ -26,8 +28,9 @@ class TaskInstance {
 
     TaskInstance() {}
 
-    TaskInstance(TaskDefinition definition) {
+    TaskInstance(TaskDefinition definition, ProcessInstance process) {
         this.id = new ObjectId()
+        this.process = process
         this.definition = definition
         this.status = STATUS_PENDING
         this.outputs = new ArrayList<>(definition.outputs.size())
