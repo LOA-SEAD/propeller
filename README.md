@@ -9,6 +9,7 @@ A workflow engine written in Groovy
 - [ ] Improve Propeller#deploy's return values/logic
 - [ ] Find a way to enable the tasks to be delegated at instantiation time
 - [ ] Implement a better validation system (probably JSON Schema)
+- [ ] Add filters (max, offset, etc) to getTasks, getProcesses... etc
 
 # DONE
 - [X] Validate a process.json before deployment
