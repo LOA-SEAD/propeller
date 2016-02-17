@@ -111,7 +111,7 @@ class Propeller {
      * @throws IllegalArgumentException if taskId is null/invalid (See <a href="URL#http://api.mongodb.org/java/current/org/bson/types/ObjectId.html">MongoDB docs</a>)
      */
 
-    TaskInstance getTask(String taskId, long userId) {
+    TaskInstance getTaskInstance(String taskId, long userId) {
         ObjectId id
         try {
             id = new ObjectId(taskId)
@@ -135,7 +135,7 @@ class Propeller {
      * @return a list containing all tasks owner by that user or an empty list
      */
 
-    ArrayList<ProcessInstance> getProcessesByOwner(long ownerId) {
+    ArrayList<ProcessInstance> getProcessesInstanceByOwner(long ownerId) {
         return this.ds.createQuery(ProcessInstance.class).field('ownerId').equal(ownerId).asList()
     }
 
