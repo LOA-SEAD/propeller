@@ -1,5 +1,7 @@
 package br.ufscar.sead.loa.propeller
 
+import br.ufscar.sead.loa.propeller.domain.ProcessDefinition
+import br.ufscar.sead.loa.propeller.domain.ProcessInstance
 import spock.lang.Specification
 
 /**
@@ -28,5 +30,27 @@ class PropellerSpec extends Specification {
         p.uri == 'forca'
         p.version == 1
         p.ownerId == 1
+
+        cleanup:
+        propeller.ds.delete(p)
     }
-}
+
+    def "instatiate a process"() {
+        def definition
+        def instance
+
+        setup:
+        definition = propeller.deploy(new File('test/resources/forca.json'), 1)
+
+        when:
+        instance = propeller.instantiate('forca', 1) as ProcessInstance
+
+        then:
+        instance.definition.uri == 'forca'
+        instance.ownerId == 1
+        instance.pendingTasks.size() == 2
+
+        cleanup:
+        propeller.ds.delete(definition)
+    }
+ }
