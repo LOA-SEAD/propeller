@@ -26,6 +26,8 @@ class TaskInstance {
     transient static int STATUS_PENDING = 1
     transient static int STATUS_COMPLETED = 2
 
+    Map<String, String> vars
+
     TaskInstance() {}
 
     TaskInstance(TaskDefinition definition, ProcessInstance process) {
@@ -36,5 +38,37 @@ class TaskInstance {
         this.outputs = new ArrayList<>(definition.outputs.size())
 
         Propeller.instance.ds.save(this)
+    }
+
+    /**
+     * Set a custom variable to the instance
+     * @param key
+     * @param value
+     * @param save if false, the instance will not be persisted – useful when setting more than one var in a row
+     */
+
+    void putVariable(String key, String value, boolean save) {
+        if (!this.vars) {
+            this.vars = new HashMap<>()
+        }
+
+        this.vars.put(key, value)
+
+        if (save) {
+            Propeller.instance.ds.save(this)
+        }
+    }
+
+    /**
+     *
+     * @param key
+     * @return the variable null if it doesn't exists
+     */
+
+    String getVariable(String key) {
+        if (!this.vars) {
+            return null
+        }
+        this.vars.get(key)
     }
 }
