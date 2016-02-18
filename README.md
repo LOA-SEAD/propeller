@@ -1,4 +1,4 @@
-# propeller
+# propeller [![Build Status](https://travis-ci.org/matheuss/propeller.svg?branch=master)](https://travis-ci.org/matheuss/propeller)
 A workflow engine written in Groovy
 
 
