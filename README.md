@@ -10,6 +10,10 @@ A workflow engine written in Groovy
 - [ ] Find a way to enable the tasks to be delegated at instantiation time
 - [ ] Implement a better validation system (probably JSON Schema)
 - [ ] Add filters (max, offset, etc) to getTasks, getProcesses... etc
+- [ ] Store other types (currently only `String`) of variables to process/task instances
 
 # DONE
 - [X] Validate a process.json before deployment
+
+# Maybe:
+- [ ] Offer the option to use other type/class than `long` for user id

@@ -143,5 +143,14 @@ class Propeller {
         Propeller.instance.init([dbName: 'propeller', 'wipeDb': true])
         Propeller.instance.deploy(new File('spec/drafts/process.json'), 1)
         println Propeller.instance.instantiate('forca', 1)
+        def p = Propeller.instance.getProcessesInstanceByOwner(1).first()
+        println p.getVariable('a')
+        p.putVariable('a', 'xD', false)
+        p.putVariable('b', '^~^', true)
+
+        p = Propeller.instance.getProcessesInstanceByOwner(1).first()
+        println p.getVariable('a')
+        println p.getVariable('b')
+
     }
 }
