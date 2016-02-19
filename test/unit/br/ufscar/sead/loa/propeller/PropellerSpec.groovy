@@ -97,4 +97,28 @@ class PropellerSpec extends Specification {
         then:
         !instance.deployed
     }
+
+    def "get a task instance by id"() {
+        def pDefinition
+        def pInstance
+        def template
+        def tInstance
+
+        setup:
+        pDefinition = propeller.deploy(new File('test/resources/forca.json'), 1)
+        pInstance = propeller.instantiate(pDefinition.uri, 1) as ProcessInstance
+        template = pInstance.pendingTasks.first()
+
+        when:
+        tInstance = propeller.getTaskInstance(template.id as String, 1)
+
+        then:
+        notThrown IllegalArgumentException
+        tInstance != null
+        tInstance.id == template.id
+
+        cleanup:
+        propeller.ds.delete(pDefinition)
+        propeller.ds.delete(pInstance)
+    }
  }
