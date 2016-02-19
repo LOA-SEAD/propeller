@@ -33,11 +33,12 @@ class Propeller {
         if (this.configured) {
             return this
         }
-        this.configured = true
 
         if (options.dbName == null) {
             throw new MissingPropertyException('dbName is required')
         }
+
+        this.configured = true
 
         // Suppress annoying Mongo/Morphia logs
         Logger.getLogger("org.mongodb.driver").setLevel(Level.SEVERE)
@@ -139,18 +140,5 @@ class Propeller {
         return this.ds.createQuery(ProcessInstance.class).field('ownerId').equal(ownerId).asList()
     }
 
-    def static main(args) {
-        Propeller.instance.init([dbName: 'propeller', 'wipeDb': true])
-        Propeller.instance.deploy(new File('spec/drafts/process.json'), 1)
-        println Propeller.instance.instantiate('forca', 1)
-        def p = Propeller.instance.getProcessesInstanceByOwner(1).first()
-        println p.getVariable('a')
-        p.putVariable('a', 'xD', false)
-        p.putVariable('b', '^~^', true)
-
-        p = Propeller.instance.getProcessesInstanceByOwner(1).first()
-        println p.getVariable('a')
-        println p.getVariable('b')
-
-    }
+    def static main(args) {}
 }

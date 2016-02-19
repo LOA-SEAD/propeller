@@ -18,6 +18,25 @@ class PropellerSpec extends Specification {
         propeller.ds.DB.name == 'propeller'
     }
 
+    def "init with null/missing dbName"() {
+        setup:
+        propeller.configured = false
+        propeller.options = null
+        propeller.ds = null
+
+        when:
+        propeller.init([wipeDb: false])
+
+        then:
+        thrown(MissingPropertyException)
+        !propeller.configured
+        propeller.options == null
+        propeller.ds == null
+
+        cleanup:
+        Propeller.instance.init([dbName: 'propeller', wipeDb: false])
+    }
+
     def "deploy a process"() {
         def p
 
