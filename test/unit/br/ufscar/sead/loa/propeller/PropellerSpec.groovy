@@ -135,4 +135,20 @@ class PropellerSpec extends Specification {
         expect:
         propeller.getTaskInstance(new ObjectId() as String, 1) == null
     }
+
+    def "get a task instance that belongs to someone else"() {
+        def pDefinition
+        def pInstance
+
+        setup:
+        pDefinition = propeller.deploy(new File('test/resources/forca.json'), 1)
+        pInstance = propeller.instantiate(pDefinition.uri, 1) as ProcessInstance
+
+        expect:
+        propeller.getTaskInstance(pInstance.pendingTasks.first().id as String, 2) == null
+
+        cleanup:
+        propeller.ds.delete(pDefinition)
+        propeller.ds.delete(pInstance)
+    }
  }
