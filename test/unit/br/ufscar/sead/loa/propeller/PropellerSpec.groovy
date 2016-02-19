@@ -152,4 +152,29 @@ class PropellerSpec extends Specification {
         propeller.ds.delete(pDefinition)
         propeller.ds.delete(pInstance)
     }
+
+    def "get all process instances by a given owner"() {
+        def pDefinition
+        def instance1
+        def instance2
+        def list
+
+        setup:
+        pDefinition = propeller.deploy(new File('test/resources/forca.json'), 1)
+        instance1 = propeller.instantiate('forca', 1) as ProcessInstance
+        instance2 = propeller.instantiate('forca', 1) as ProcessInstance
+
+        when:
+        list = propeller.getProcessesInstanceByOwner(1)
+
+        then:
+        list.size() == 2
+        list.first().id == instance1.id
+        list.last().id == instance2.id
+
+        cleanup:
+        propeller.ds.delete(pDefinition)
+        propeller.ds.delete(instance1)
+        propeller.ds.delete(instance2)
+    }
  }
