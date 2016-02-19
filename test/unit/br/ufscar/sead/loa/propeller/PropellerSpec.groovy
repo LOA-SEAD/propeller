@@ -72,4 +72,14 @@ class PropellerSpec extends Specification {
         cleanup:
         propeller.ds.delete(definition)
     }
+
+    def "instantiate a process that doesn't exists"() {
+        def instance
+
+        when:
+        instance = propeller.instantiate('foo', 1)
+
+        then:
+        instance == Errors.PROCESS_NOT_FOUND
+    }
  }
