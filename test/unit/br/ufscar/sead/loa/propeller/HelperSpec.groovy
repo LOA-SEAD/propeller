@@ -23,12 +23,4 @@ class HelperSpec extends Specification{
         expect:
         Helper.valid("propeller")
     }
-
-    def "try to validate a string by it's length"() {
-        expect:
-        !Helper.valid("", 0)
-        !Helper.valid("", 1)
-        Helper.valid("1", 1)
-        !Helper.valid("1", 2)
-    }
 }

@@ -10,9 +10,5 @@ class Helper {
         return str != null && str != ""
     }
 
-    static boolean valid(String str, int minLength) {
-        return valid(str) && str.length() >= minLength
-    }
-
     // TODO: "valid" probably isn't a good name. Find a better one.
 }
