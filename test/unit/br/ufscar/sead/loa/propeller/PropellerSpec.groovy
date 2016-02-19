@@ -121,4 +121,12 @@ class PropellerSpec extends Specification {
         propeller.ds.delete(pDefinition)
         propeller.ds.delete(pInstance)
     }
+
+    def "get a task instance with by an invalid id"() {
+        when:
+        propeller.getTaskInstance('invalid id', 1)
+
+        then:
+        thrown IllegalArgumentException
+    }
  }
