@@ -82,4 +82,19 @@ class PropellerSpec extends Specification {
         then:
         instance == Errors.PROCESS_NOT_FOUND
     }
+
+    def "deploy an invalid process"() {
+        def definition
+        def instance
+
+        setup:
+        definition = new File('test/resources/forca.json').text
+        definition = definition.replace('forca', '') // empty url
+
+        when:
+        instance = propeller.deploy(definition, 1)
+
+        then:
+        !instance.deployed
+    }
  }
