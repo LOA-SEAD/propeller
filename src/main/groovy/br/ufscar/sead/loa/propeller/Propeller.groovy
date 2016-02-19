@@ -135,9 +135,29 @@ class Propeller {
      * @param ownerId
      * @return a list containing all tasks owner by that user or an empty list
      */
-
     ArrayList<ProcessInstance> getProcessesInstanceByOwner(long ownerId) {
         return this.ds.createQuery(ProcessInstance.class).field('ownerId').equal(ownerId).asList()
+    }
+
+    /**
+     *
+     * @param id the desired process instance id
+     * @param userId the id of the user that is requiring the instance.
+     * @return the instance if the user id matches the owner id or if userId == 0 ('admin' mode); null if the no such
+     *         instance exists or belongs to someone else
+     */
+    ProcessInstance getProcessInstanceById(ObjectId id, long userId) {
+        def instance = this.ds.createQuery(ProcessInstance.class).field('id').equal(id).get()
+
+        if (!instance) {
+            return null
+        }
+
+        if (instance.ownerId != userId && userId != 0) {
+            return null
+        }
+
+        return instance
     }
 
     def static main(args) {}
