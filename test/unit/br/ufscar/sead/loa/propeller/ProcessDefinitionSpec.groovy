@@ -18,7 +18,7 @@ class ProcessDefinitionSpec extends Specification {
         Propeller.instance.ds.DB.dropDatabase()
     }
 
-    def "deploy a process without any task"() {
+    def "create a process without any task"() {
         def definition
 
         setup:
@@ -31,7 +31,7 @@ class ProcessDefinitionSpec extends Specification {
         !definition.validate()
     }
 
-    def "deploy a process with an invalid task"() {
+    def "create a process with an invalid task"() {
         def definition
 
         setup:
