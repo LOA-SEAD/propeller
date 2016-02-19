@@ -177,4 +177,9 @@ class PropellerSpec extends Specification {
         propeller.ds.delete(instance1)
         propeller.ds.delete(instance2)
     }
+
+    def "get all process instances by an owner that doesn't have any instance"() {
+        expect:
+        propeller.getProcessesInstanceByOwner(1).empty
+    }
  }
