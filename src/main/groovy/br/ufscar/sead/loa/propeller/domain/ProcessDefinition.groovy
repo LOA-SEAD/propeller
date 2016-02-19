@@ -44,7 +44,7 @@ class ProcessDefinition extends Mistakable {
 
         ArrayList<Document> tasks = doc.get("tasks") as ArrayList<Document>
 
-        this.tasks = new ArrayList<>(tasks.size())
+        this.tasks = new ArrayList<>()
 
         tasks.each { task ->
             this.tasks.add(new TaskDefinition(task))
