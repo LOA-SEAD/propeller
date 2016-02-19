@@ -182,4 +182,42 @@ class PropellerSpec extends Specification {
         expect:
         propeller.getProcessesInstanceByOwner(1).empty
     }
+
+    def "get a process instance by id"() {
+        def instance
+
+        setup:
+        propeller.deploy(new File('test/resources/forca.json'), 1)
+        instance = propeller.instantiate('forca', 1) as ProcessInstance
+
+        expect:
+        propeller.getProcessInstanceById(instance.id, 1).id == instance.id
+    }
+
+    def "get a process instance by id that does not exists"() {
+        expect:
+        propeller.getProcessInstanceById(new ObjectId(), 1) == null
+    }
+
+    def "get a process instance by id that belongs to someone else"() {
+        def instance
+
+        setup:
+        propeller.deploy(new File('test/resources/forca.json'), 1)
+        instance = propeller.instantiate('forca', 1) as ProcessInstance
+
+        expect:
+        propeller.getProcessInstanceById(instance.id, 2) == null
+    }
+
+    def "get a process instance by id in 'admin' mode"() {
+        def instance
+
+        setup:
+        propeller.deploy(new File('test/resources/forca.json'), 1)
+        instance = propeller.instantiate('forca', 1) as ProcessInstance
+
+        expect:
+        propeller.getProcessInstanceById(instance.id, 0).id == instance.id
+    }
  }
