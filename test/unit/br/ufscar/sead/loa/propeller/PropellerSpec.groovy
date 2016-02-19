@@ -2,6 +2,7 @@ package br.ufscar.sead.loa.propeller
 
 import br.ufscar.sead.loa.propeller.domain.ProcessDefinition
 import br.ufscar.sead.loa.propeller.domain.ProcessInstance
+import org.bson.types.ObjectId
 import spock.lang.Specification
 
 /**
@@ -128,5 +129,10 @@ class PropellerSpec extends Specification {
 
         then:
         thrown IllegalArgumentException
+    }
+
+    def "get a task instance with a valid but non existent id"() {
+        expect:
+        propeller.getTaskInstance(new ObjectId() as String, 1) == null
     }
  }
