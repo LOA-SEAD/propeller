@@ -32,3 +32,9 @@ sourceSets {
 
 cobertura.coverageFormats = ['html', 'xml'] // coveralls plugin depends on xml format report
 cobertura.coverageSourceDirs = sourceSets.main.groovy.srcDirs
+
+gradle.taskGraph.whenReady { graph ->
+    if (graph.hasTask(':cobertura') || graph.hasTask(':test')) {
+        compileGroovy.groovyOptions.optimizationOptions.all = false
+    }
+}
