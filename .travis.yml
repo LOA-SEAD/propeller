@@ -6,6 +6,9 @@ services:
 before_install:
   - pip install --user codecov
 
+script:
+  - ./gradlew clean test
+
 after_success:
   - ./gradlew cobertura coveralls
   - codecov
