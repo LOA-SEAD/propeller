@@ -19,7 +19,7 @@
     },
     {
       "name": "Tema",
-      "uri": "/theme"
+      "uri": "/theme",
       "description": "Criar/editar/selecionar um tema para o jogo.",
       "type": "image_collection",
       "dependencies": null,
