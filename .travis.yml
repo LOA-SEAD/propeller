@@ -3,8 +3,12 @@ language: groovy
 services:
   - mongodb
 
+before_install:
+  - pip install --user codecov
+
 after_success:
   - ./gradlew cobertura coveralls
+  - codecov
 
 notifications:
   slack: loaufscar:cA4fUEHliTVF9nYlANnBSwsz
