@@ -7,6 +7,8 @@ group 'br.ufscar.sead.loa.propeller'
 version '0.1'
 
 apply plugin: 'groovy'
+apply plugin: "jacoco"
+
 
 repositories {
     mavenCentral()
