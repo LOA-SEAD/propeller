@@ -220,4 +220,4 @@ class PropellerSpec extends Specification {
         expect:
         propeller.getProcessInstanceById(instance.id, 0).id == instance.id
     }
- }
+}
