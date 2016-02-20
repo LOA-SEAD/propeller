@@ -20,6 +20,7 @@ class TaskDefinition extends Mistakable {
     @Id
     ObjectId id
     String name
+    String uri
     String description
     String type // TODO: change to int
     // dependencies TODO
@@ -32,6 +33,7 @@ class TaskDefinition extends Mistakable {
     TaskDefinition(Document doc) {
         this.id = new ObjectId()
         this.name = doc.getString("name")
+        this.uri = doc.getString("uri")
         this.description = doc.getString("description")
         this.type = doc.getString("type")
 
@@ -47,7 +49,8 @@ class TaskDefinition extends Mistakable {
     }
 
     boolean validate() {
-        if (false in [Helper.valid(this.name), Helper.valid(this.description), Helper.valid(this.type)]) return false
+        if (false in [Helper.valid(this.name), Helper.valid(this.uri), Helper.valid(this.description),
+                      Helper.valid(this.type)]) return false
 
         if (!this.outputs) return false
 

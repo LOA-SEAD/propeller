@@ -5,6 +5,7 @@
   "tasks": [
     {
       "name": "Banco de Questões",
+      "uri": "/question",
       "description": "Criar/editar/selecionar um banco de questões para o jogo.",
       "type": "text_database",
       "dependencies": null,
@@ -18,6 +19,7 @@
     },
     {
       "name": "Tema",
+      "uri": "/theme"
       "description": "Criar/editar/selecionar um tema para o jogo.",
       "type": "image_collection",
       "dependencies": null,
