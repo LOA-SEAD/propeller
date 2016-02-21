@@ -75,7 +75,7 @@ class ProcessInstance {
     /**
      *
      * @param key
-     * @return the variable null if it doesn't exists
+     * @return the variable or null if it doesn't exists
      */
 
     String getVariable(String key) {
