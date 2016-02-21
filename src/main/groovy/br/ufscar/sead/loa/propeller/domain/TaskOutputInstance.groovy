@@ -13,7 +13,8 @@ class TaskOutputInstance {
 
     TaskOutputInstance() {}
 
-    TaskOutputInstance(TaskOutputDefinition definition) {
+    TaskOutputInstance(TaskOutputDefinition definition, String path) {
         this.definition = definition
+        this.path = path
     }
 }

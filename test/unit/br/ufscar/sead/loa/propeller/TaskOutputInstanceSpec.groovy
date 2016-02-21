@@ -19,7 +19,7 @@ class TaskOutputInstanceSpec extends Specification {
         taskInstance = (Propeller.instance.instantiate('forca', 1) as ProcessInstance).pendingTasks.first()
 
         when:
-        instance = new TaskOutputInstance(taskInstance.definition.outputs.first())
+        instance = new TaskOutputInstance(taskInstance.definition.outputs.first(), 'path')
 
         then:
         instance.definition == taskInstance.definition.outputs.first()
