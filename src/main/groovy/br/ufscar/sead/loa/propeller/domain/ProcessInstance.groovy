@@ -3,7 +3,10 @@ package br.ufscar.sead.loa.propeller.domain
 import br.ufscar.sead.loa.propeller.Propeller
 import org.bson.types.ObjectId
 import org.mongodb.morphia.annotations.Entity
+import org.mongodb.morphia.annotations.Field
 import org.mongodb.morphia.annotations.Id
+import org.mongodb.morphia.annotations.Index
+import org.mongodb.morphia.annotations.Indexes
 import org.mongodb.morphia.annotations.Reference
 
 /**
@@ -12,11 +15,15 @@ import org.mongodb.morphia.annotations.Reference
  */
 
 @Entity('process_instance')
+@Indexes(
+        @Index(value = "status", fields = @Field("status"))
+)
 class ProcessInstance {
     @Id
     ObjectId id
     @Reference
     ProcessDefinition definition
+    int status
 
     long ownerId
 
@@ -25,6 +32,10 @@ class ProcessInstance {
     @Reference
     ArrayList<TaskInstance> completedTasks
 
+    transient static int STATUS_ONGOING = 1
+    transient static int STATUS_ALL_TASKS_COMPLETED = 2
+    transient static int STATUS_COMPLETED = 3
+
     Map<String, String> vars
 
     ProcessInstance() {}
@@ -32,6 +43,7 @@ class ProcessInstance {
     ProcessInstance(ProcessDefinition definition, long ownerId) {
         this.id = new ObjectId()
         this.definition = definition
+        this.status = STATUS_ONGOING
         this.ownerId = ownerId
         this.pendingTasks = new ArrayList<>(definition.tasks.size())
         this.completedTasks = new ArrayList<>(definition.tasks.size())
