@@ -36,5 +36,11 @@
         }
       ]
     }
+  ],
+  "outputs": [
+    "web",
+    "android",
+    "linux",
+    "moodle"
   ]
 }

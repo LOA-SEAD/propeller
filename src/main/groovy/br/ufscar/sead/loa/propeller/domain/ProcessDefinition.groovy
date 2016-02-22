@@ -33,6 +33,7 @@ class ProcessDefinition extends Mistakable {
 
     @Reference
     ArrayList<TaskDefinition> tasks
+    ArrayList<String> outputs
 
     ProcessDefinition() {}
 
@@ -48,6 +49,14 @@ class ProcessDefinition extends Mistakable {
 
         tasks.each { task ->
             this.tasks.add(new TaskDefinition(task))
+        }
+
+        this.outputs = new ArrayList<>()
+
+        def outputs = doc.get('outputs') as ArrayList<String>
+
+        outputs.each { output ->
+            this.outputs.add(output)
         }
     }
 
