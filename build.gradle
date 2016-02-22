@@ -1,6 +1,7 @@
 plugins {
     id "net.saliman.cobertura" version "2.3.0"
     id "com.github.kt3k.coveralls" version "2.6.3"
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
 }
 
 group 'br.ufscar.sead.loa.propeller'
@@ -36,5 +37,11 @@ cobertura.coverageSourceDirs = sourceSets.main.groovy.srcDirs
 gradle.taskGraph.whenReady { graph ->
     if (graph.hasTask(':cobertura') || graph.hasTask(':test')) {
         compileGroovy.groovyOptions.optimizationOptions.all = false
+    }
+}
+
+shadowJar {
+    dependencies {
+        exclude(dependency('org.codehaus.groovy:groovy-all:2.3.11'))
     }
 }
