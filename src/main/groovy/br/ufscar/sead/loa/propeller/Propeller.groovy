@@ -59,8 +59,8 @@ class Propeller {
         return this
     }
 
-    def deploy(File json, long ownerId) {
-        deploy(json.text, ownerId)
+    ProcessDefinition deploy(File json, long ownerId) {
+        return deploy(json.text, ownerId)
     }
 
     /**
@@ -160,5 +160,11 @@ class Propeller {
         return instance
     }
 
-    def static main(args) {}
+    def static main(args) {
+        Propeller.instance.init([dbName: 'propeller', wipeDb: true])
+        Propeller.instance.deploy(new File('spec/drafts/process.json'), 1)
+        def instance = Propeller.instance.instantiate('forca', 1) as ProcessInstance
+
+        println instance.pendingTasks.last().complete('a/b/c/papel.png', 'd/e/f/iniscio.png')
+    }
 }

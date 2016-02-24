@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'br.ufscar.sead.loa.propeller'
-version '0.1'
+version '0.1.1'
 
 apply plugin: 'groovy'
 
