@@ -30,7 +30,8 @@ class ProcessDefinition extends Mistakable {
     int version
 
     @Transient
-    boolean deployed
+    boolean deployed // only exists when the process has just been set.
+    boolean active // will be false when the process is undeployed
     long ownerId
 
     @Reference
@@ -43,6 +44,7 @@ class ProcessDefinition extends Mistakable {
         this.name = doc.getString("name")
         this.uri = doc.getString("uri")
         this.version = doc.getInteger("version")
+        this.active = true
         this.ownerId = ownerId
 
         ArrayList<Document> tasks = doc.get("tasks") as ArrayList<Document>
