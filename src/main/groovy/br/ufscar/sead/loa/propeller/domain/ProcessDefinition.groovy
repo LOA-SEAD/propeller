@@ -11,6 +11,7 @@ import org.mongodb.morphia.annotations.IndexOptions
 import org.mongodb.morphia.annotations.Indexes
 import org.mongodb.morphia.annotations.Id
 import org.mongodb.morphia.annotations.Reference
+import org.mongodb.morphia.annotations.Transient
 
 /**
  * Created by matheus on 2/4/16.
@@ -28,7 +29,8 @@ class ProcessDefinition extends Mistakable {
     String uri
     int version
 
-    transient boolean deployed
+    @Transient
+    boolean deployed
     long ownerId
 
     @Reference
