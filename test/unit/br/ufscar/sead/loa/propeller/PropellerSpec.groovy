@@ -82,7 +82,7 @@ class PropellerSpec extends Specification {
         instance = propeller.instantiate('foo', 1)
 
         then:
-        instance == Errors.PROCESS_NOT_FOUND
+        instance == Propeller.Errors.PROCESS_NOT_FOUND
     }
 
     def "deploy an invalid process"() {

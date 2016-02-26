@@ -177,4 +177,9 @@ class Propeller {
     }
 
     def static main(args) {}
+
+    class Errors {
+        protected static int PROCESS_NOT_FOUND = 404
+        static int PROCESS_URI_NOT_UNIQUE = 409
+    }
 }
