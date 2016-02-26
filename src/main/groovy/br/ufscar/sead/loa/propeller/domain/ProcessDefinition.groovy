@@ -20,7 +20,8 @@ import org.mongodb.morphia.annotations.Transient
 
 @Entity('process_definition')
 @Indexes(
-        @Index(value = "uri", fields = @Field("uri"), options = @IndexOptions(unique = true))
+        [@Index(value = "uri", fields = @Field("uri"), options = @IndexOptions(unique = true)),
+        @Index(value = 'actite', fields = @Field('active'))]
 )
 class ProcessDefinition extends Mistakable {
     @Id
