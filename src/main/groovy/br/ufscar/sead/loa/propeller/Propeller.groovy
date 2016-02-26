@@ -76,7 +76,7 @@ class Propeller {
         def pd = new ProcessDefinition(doc, ownerId)
 
         if (pd.validate()) {
-            try {
+            try { // TODO check if this works as expected
                 this.ds.save(pd)
                 pd.deployed = true
             } catch (DuplicateKeyException ignored) {
@@ -85,6 +85,19 @@ class Propeller {
         }
 
         return pd
+    }
+
+    /**
+     * Undeploys a process definition, making impossible to create new instances, but not breaking old ones.
+     *
+     * @param uri
+     */
+    void undeploy(String uri) {
+        def definition = this.ds.createQuery(ProcessDefinition.class).field('uri').equal(uri).get()
+        definition.uri = definition.uri + '-inactive-' + System.currentTimeMillis()
+        definition.active = false
+
+        this.ds.save(definition)
     }
 
     /**
