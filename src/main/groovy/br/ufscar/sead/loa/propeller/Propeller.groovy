@@ -52,6 +52,9 @@ class Propeller {
 
         if (options.wipeDb == true) {
             this.ds.getDB().dropDatabase()
+            morphia.mapPackage("br.ufscar.sead.loa.propeller.domain")
+            this.ds = morphia.createDatastore(new MongoClient(), options.dbName as String)
+            this.ds.ensureIndexes()
         }
 
         this.options = options
