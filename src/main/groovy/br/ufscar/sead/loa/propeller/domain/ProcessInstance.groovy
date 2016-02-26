@@ -7,6 +7,7 @@ import org.mongodb.morphia.annotations.Field
 import org.mongodb.morphia.annotations.Id
 import org.mongodb.morphia.annotations.Index
 import org.mongodb.morphia.annotations.Indexes
+import org.mongodb.morphia.annotations.PrePersist
 import org.mongodb.morphia.annotations.Reference
 
 /**
@@ -38,6 +39,9 @@ class ProcessInstance {
 
     Map<String, String> vars
 
+    Date createdAt
+    Date updatedAt
+
     ProcessInstance() {}
 
     ProcessInstance(ProcessDefinition definition, long ownerId) {
@@ -51,6 +55,8 @@ class ProcessInstance {
         this.definition.tasks.each { task ->
             this.pendingTasks.add(new TaskInstance(task, this))
         }
+
+        this.createdAt = new Date()
     }
 
     /**
@@ -84,4 +90,8 @@ class ProcessInstance {
         }
         this.vars.get(key)
     }
+
+    @PrePersist
+    void prePersist() { this.updatedAt = new Date() }
+
 }
