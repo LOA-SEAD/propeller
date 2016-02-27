@@ -1,4 +1,4 @@
-# propeller [![Build Status](https://travis-ci.org/matheuss/propeller.svg?branch=master)](https://travis-ci.org/matheuss/propeller) [![Coverage Status](https://coveralls.io/repos/github/matheuss/propeller/badge.svg?branch=master)](https://coveralls.io/github/matheuss/propeller?branch=master) [![codecov.io](https://codecov.io/github/matheuss/propeller/coverage.svg?branch=master)](https://codecov.io/github/matheuss/propeller?branch=master)
+# propeller [![Build Status](https://travis-ci.org/matheuss/propeller.svg?branch=master)](https://travis-ci.org/matheuss/propeller) [![Coverage Status](https://coveralls.io/repos/github/matheuss/propeller/badge.svg?branch=master)](https://coveralls.io/github/matheuss/propeller?branch=master) [![codecov.io](https://codecov.io/github/matheuss/propeller/coverage.svg?branch=master)](https://codecov.io/github/matheuss/propeller?branch=master) [![Dependency Status](https://www.versioneye.com/user/projects/56d0a335157a69003c4b6c0d/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56d0a335157a69003c4b6c0d)
 A workflow engine written in Groovy
 
 
