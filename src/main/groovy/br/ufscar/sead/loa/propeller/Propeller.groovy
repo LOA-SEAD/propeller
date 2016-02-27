@@ -162,7 +162,14 @@ class Propeller {
      * @return the instance if the user id matches the owner id or if userId == 0 ('admin' mode); null if the no such
      *         instance exists or belongs to someone else
      */
-    ProcessInstance getProcessInstanceById(ObjectId id, long userId) {
+    ProcessInstance getProcessInstanceById(String processId, long userId) {
+        ObjectId id
+        try {
+            id = new ObjectId(processId)
+        } catch (Exception ignored) {
+            throw new IllegalArgumentException("Invalid processId")
+        }
+
         def instance = this.ds.createQuery(ProcessInstance.class).field('id').equal(id).get()
 
         if (!instance) {

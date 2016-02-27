@@ -28,7 +28,7 @@ class ProcessInstanceSpec extends Specification {
         instance.putVariable('foo', 'bar', true)
         instance.putVariable('bar', 'foo', true)
         // ensure that the var is persisted
-        instance = Propeller.instance.getProcessInstanceById(instance.id, 1)
+        instance = Propeller.instance.getProcessInstanceById(instance.id.toString(), 1)
 
         then:
         instance.getVariable('foo') == 'bar'
@@ -48,7 +48,7 @@ class ProcessInstanceSpec extends Specification {
         when:
         instance.putVariable('foo', 'bar', false)
         // ensure that the var is not persisted
-        instance = Propeller.instance.getProcessInstanceById(instance.id, 1)
+        instance = Propeller.instance.getProcessInstanceById(instance.id.toString(), 1)
 
         then:
         instance.getVariable('foo') == null
