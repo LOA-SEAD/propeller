@@ -22,6 +22,7 @@ import org.mongodb.morphia.annotations.Reference
 class ProcessInstance {
     @Id
     ObjectId id
+    String name
     @Reference
     ProcessDefinition definition
     int status
@@ -46,6 +47,7 @@ class ProcessInstance {
 
     ProcessInstance(ProcessDefinition definition, long ownerId) {
         this.id = new ObjectId()
+        this.name = definition.name
         this.definition = definition
         this.status = STATUS_ONGOING
         this.ownerId = ownerId
