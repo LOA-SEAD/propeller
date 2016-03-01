@@ -165,7 +165,7 @@ class PropellerSpec extends Specification {
         instance2 = propeller.instantiate('forca', 1) as ProcessInstance
 
         when:
-        list = propeller.getProcessesInstanceByOwner(1)
+        list = propeller.getProcessInstancesByOwner(1)
 
         then:
         list.size() == 2
@@ -180,7 +180,7 @@ class PropellerSpec extends Specification {
 
     def "get all process instances by an owner that doesn't have any instance"() {
         expect:
-        propeller.getProcessesInstanceByOwner(1).empty
+        propeller.getProcessInstancesByOwner(1).empty
     }
 
     def "get a process instance by id"() {

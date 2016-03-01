@@ -24,7 +24,7 @@ class TaskInstanceSpec extends Specification {
         def instance
 
         setup:
-        processInstance = Propeller.instance.getProcessesInstanceByOwner(1).first()
+        processInstance = Propeller.instance.getProcessInstancesByOwner(1).first()
         instance = processInstance.pendingTasks.first() as TaskInstance
 
         when:
@@ -44,7 +44,7 @@ class TaskInstanceSpec extends Specification {
         def instance
 
         setup:
-        processInstance = Propeller.instance.getProcessesInstanceByOwner(1).first()
+        processInstance = Propeller.instance.getProcessInstancesByOwner(1).first()
         instance = processInstance.pendingTasks.last() as TaskInstance
 
         when:

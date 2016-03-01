@@ -151,7 +151,7 @@ class Propeller {
      * @param ownerId
      * @return a list containing all tasks owner by that user or an empty list
      */
-    ArrayList<ProcessInstance> getProcessesInstanceByOwner(long ownerId) {
+    ArrayList<ProcessInstance> getProcessInstancesByOwner(long ownerId) {
         return this.ds.createQuery(ProcessInstance.class).field('ownerId').equal(ownerId).asList()
     }
 
