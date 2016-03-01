@@ -88,6 +88,10 @@ class TaskInstance {
      * @return true if the files matches what the task expects or false otherwise.
      */
     boolean complete(String... paths) {
+        if (this.status != STATUS_PENDING) {
+            return false
+        }
+
         // A task should not be completed with more or less outputs than its definition
         if (paths.size() != this.definition.outputs.size()) {
             println 'task ' + this.id + " not completed: paths count != expected"
