@@ -90,6 +90,7 @@ class TaskInstance {
     boolean complete(String... paths) {
         // A task should not be completed with more or less outputs than its definition
         if (paths.size() != this.definition.outputs.size()) {
+            println 'task ' + this.id + " not completed: paths count != expected"
             return false
         }
 
@@ -115,6 +116,7 @@ class TaskInstance {
         // if the number of matched paths is != from the number of expected, the completion should fail
         if (count != this.definition.outputs.size()) {
             this.outputs = null
+            println 'task ' + this.id + " not completed: count != expected"
             return false
         }
 
@@ -126,6 +128,8 @@ class TaskInstance {
         if (this.process.pendingTasks.size() == 0) {
             this.process.status = ProcessInstance.STATUS_ALL_TASKS_COMPLETED
         }
+
+        Propeller.instance.ds.save(this.process, this)
 
         return true
     }
