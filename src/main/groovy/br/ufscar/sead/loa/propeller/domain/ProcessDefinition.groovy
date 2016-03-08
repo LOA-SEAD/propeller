@@ -39,6 +39,8 @@ class ProcessDefinition extends Mistakable {
     ArrayList<TaskDefinition> tasks
     ArrayList<String> outputs
 
+    Map<String, String> vars
+
     ProcessDefinition() {}
 
     ProcessDefinition(Document doc, long ownerId) {
@@ -78,5 +80,17 @@ class ProcessDefinition extends Mistakable {
             return !task.validate()
         }
         return !invalidTask
+    }
+
+    /**
+     *
+     * @param key
+     * @return the variable null if it doesn't exists
+     */
+    String getVariable(String key) {
+        if (!this.vars) {
+            return null
+        }
+        this.vars.get(key)
     }
 }
