@@ -25,6 +25,6 @@ class TaskOutputDefinition extends Mistakable {
 
     @Override
     boolean validate() {
-        return !(false in [Helper.valid(this.name), Helper.valid(this.type), Helper.valid(this.path)])
+        return !(false in [Helper.valid(this.name), Helper.valid(this.type)])
     }
 }
