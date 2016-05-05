@@ -93,6 +93,12 @@ class ProcessInstance {
         this.vars.get(key)
     }
 
+    void setName(String name) {
+        this.name = name
+
+        Propeller.instance.ds.save(this)
+    }
+
     @PrePersist
     void prePersist() { this.updatedAt = new Date() }
 
