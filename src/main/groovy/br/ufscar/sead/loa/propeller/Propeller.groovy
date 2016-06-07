@@ -5,6 +5,8 @@ import br.ufscar.sead.loa.propeller.domain.ProcessInstance
 import br.ufscar.sead.loa.propeller.domain.TaskInstance
 import com.mongodb.DuplicateKeyException
 import com.mongodb.MongoClient
+import com.mongodb.MongoCredential
+import com.mongodb.ServerAddress
 import org.bson.Document
 import org.bson.types.ObjectId
 import org.mongodb.morphia.Datastore
@@ -45,9 +47,26 @@ class Propeller {
         Logger.getLogger("org.mongodb.morphia").setLevel(Level.SEVERE)
 
         Morphia morphia = new Morphia()
+        def client
+
+        if (options.authDb) {
+            if (!options.username) {
+                throw new MissingPropertyException('username is required')
+            }
+
+            if (!options.password) {
+                throw new MissingPropertyException('password is required')
+            }
+
+            client = new MongoClient(new ServerAddress(),
+                    Arrays.asList(MongoCredential.createCredential(options.username as String, options.authDb as String,
+                            options.password as char[])))
+        } else {
+            client = new MongoClient()
+        }
 
         morphia.mapPackage("br.ufscar.sead.loa.propeller.domain")
-        this.ds = morphia.createDatastore(new MongoClient(), options.dbName as String)
+        this.ds = morphia.createDatastore(client, options.dbName as String)
         this.ds.ensureIndexes()
 
         if (options.wipeDb == true) {
@@ -149,7 +168,7 @@ class Propeller {
      * Find all processes that belongs to a given user
      *
      * @param ownerId
-     * @return a list containing all tasks owner by that user or an empty list
+     * @return a list containing all processes owned by that user or an empty list
      */
     ArrayList<ProcessInstance> getProcessInstancesByOwner(long ownerId) {
         return this.ds.createQuery(ProcessInstance.class).field('ownerId').equal(ownerId).asList()
