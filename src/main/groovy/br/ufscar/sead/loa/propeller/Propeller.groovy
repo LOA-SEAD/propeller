@@ -202,6 +202,10 @@ class Propeller {
         return instance
     }
 
+    ProcessDefinition getProcessDefinitionByUri(String uri) {
+        return this.ds.createQuery(ProcessDefinition.class).field('uri').equal(uri).get();
+    }
+
     def static main(args) {}
 
     class Errors {
