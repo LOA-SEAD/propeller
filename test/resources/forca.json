@@ -35,6 +35,26 @@
           "path": "/imgs"
         }
       ]
+    },
+    {
+      "optional": true,
+      "name": "Tarefa Opcional",
+      "uri": "optional",
+      "description": "Uma tarefa opcional para teste",
+      "type": "image_collection",
+      "dependencies": null,
+      "outputs": [
+        {
+          "name": "inicio.png",
+          "type": "image",
+          "path": "/imgs"
+        },
+        {
+          "name": "papel.png",
+          "type": "image",
+          "path": "/imgs"
+        }
+      ]
     }
   ]
 }
