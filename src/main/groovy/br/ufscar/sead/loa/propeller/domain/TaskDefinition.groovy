@@ -23,6 +23,7 @@ class TaskDefinition extends Mistakable {
     String uri
     String description
     String type // TODO: change to int
+    boolean optional;
     // dependencies TODO
     @Embedded
     ArrayList<TaskOutputDefinition> outputs
