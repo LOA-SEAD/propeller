@@ -11,6 +11,7 @@ import org.mongodb.morphia.annotations.Id
 
 /**
  * Created by matheus on 2/4/16.
+ * Last Modification by Lucas Suguinoshita on 8/29/16.
  * https://github.com/matheuss
  */
 
@@ -23,7 +24,7 @@ class TaskDefinition extends Mistakable {
     String uri
     String description
     String type // TODO: change to int
-    boolean optional;
+    Boolean optional;
     // dependencies TODO
     @Embedded
     ArrayList<TaskOutputDefinition> outputs
