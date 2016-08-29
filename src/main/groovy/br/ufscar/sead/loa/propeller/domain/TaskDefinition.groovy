@@ -37,7 +37,7 @@ class TaskDefinition extends Mistakable {
         this.uri = doc.getString("uri")
         this.description = doc.getString("description")
         this.type = doc.getString("type")
-        this.optional = doc.getString("optional") ? doc.getString("optional").toBoolean() : true
+        this.optional = doc.getBoolean("optional")
 
         ArrayList<Document> outputs = doc.get('outputs') as ArrayList<Document>
 
