@@ -7,6 +7,7 @@ import spock.lang.Specification
 
 /**
  * Created by matheus on 2/18/16.
+ * Last Modification by Lucas Suguinoshita on 8/29/16.
  * https://github.com/matheuss
  */
 class PropellerSpec extends Specification {
@@ -68,7 +69,7 @@ class PropellerSpec extends Specification {
         then:
         instance.definition.uri == 'forca'
         instance.ownerId == 1
-        instance.pendingTasks.size() == 2
+        instance.pendingTasks.size() == 3
 
         cleanup:
         propeller.ds.delete(definition)
