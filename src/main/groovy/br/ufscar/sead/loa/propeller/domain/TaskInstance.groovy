@@ -12,6 +12,7 @@ import org.mongodb.morphia.annotations.Reference
 
 /**
  * Created by matheus on 2/8/16.
+ * Last Modification by Lucas Suguinoshita on 8/29/16.
  * https://github.com/matheuss
  */
 @Entity('task_instance')
@@ -129,7 +130,7 @@ class TaskInstance {
         this.process.pendingTasks.remove(this)
         this.process.completedTasks.add(this)
 
-        if (this.process.pendingTasks.size() == 0) {
+        if ( !this.process.pendingTasks.any { task -> !(task.definition.optional) } ) {
             this.process.status = ProcessInstance.STATUS_ALL_TASKS_COMPLETED
         }
 

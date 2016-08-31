@@ -11,6 +11,7 @@ import org.mongodb.morphia.annotations.Id
 
 /**
  * Created by matheus on 2/4/16.
+ * Last Modification by Lucas Suguinoshita on 8/29/16.
  * https://github.com/matheuss
  */
 
@@ -23,6 +24,7 @@ class TaskDefinition extends Mistakable {
     String uri
     String description
     String type // TODO: change to int
+    Boolean optional;
     // dependencies TODO
     @Embedded
     ArrayList<TaskOutputDefinition> outputs
@@ -36,6 +38,7 @@ class TaskDefinition extends Mistakable {
         this.uri = doc.getString("uri")
         this.description = doc.getString("description")
         this.type = doc.getString("type")
+        this.optional = doc.getBoolean("optional")
 
         ArrayList<Document> outputs = doc.get('outputs') as ArrayList<Document>
 

@@ -15,6 +15,7 @@ import org.mongodb.morphia.annotations.Transient
 
 /**
  * Created by matheus on 2/4/16.
+ * Last Modification by Lucas Suguinoshita on 8/29/16.
  * https://github.com/matheuss
  */
 
@@ -67,6 +68,11 @@ class ProcessDefinition extends Mistakable {
         }
     }
 
+    /**
+     * Evaluates many validations for the process instance and its tasks;
+     * TODO: Describe what a valid process is;
+     * @return true if process is valid, false if invalid;
+     */
     boolean validate() {
         // version doesn't need to be checked. If it's null or isn't an int in the process.json,
         // an exception will be thrown.
