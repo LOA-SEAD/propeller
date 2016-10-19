@@ -28,6 +28,7 @@ class TaskDefinition extends Mistakable {
     // dependencies TODO
     @Embedded
     ArrayList<TaskOutputDefinition> outputs
+    ArrayList<TaskOutputDefinition> optionalOutputs
 
 
     TaskDefinition() {}
@@ -43,9 +44,14 @@ class TaskDefinition extends Mistakable {
         ArrayList<Document> outputs = doc.get('outputs') as ArrayList<Document>
 
         this.outputs = new ArrayList<TaskOutputDefinition>()
+        this.optionalOutputs = new ArrayList<TaskOutputDefinition>()
 
         outputs.each { output ->
-            this.outputs.add(new TaskOutputDefinition(output))
+            if(output.getBoolean("optional")) {
+                this.optionalOutputs.add(new TaskOutputDefinition(output))
+            } else {
+                this.outputs.add(new TaskOutputDefinition(output))
+            }
         }
 
         Propeller.instance.ds.save(this)
