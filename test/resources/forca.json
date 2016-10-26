@@ -55,6 +55,26 @@
           "path": "/imgs"
         }
       ]
+    },
+    {
+      "name": "Tarefa com Output Opcional",
+      "uri": "optional",
+      "description": "Uma tarefa opcional para teste",
+      "type": "image_collection",
+      "dependencies": null,
+      "outputs": [
+        {
+          "name": "opcional.json",
+          "optional": true,
+          "type": "json",
+          "path": "/json"
+        },
+        {
+          "name": "papel.png",
+          "type": "image",
+          "path": "/imgs"
+        }
+      ]
     }
   ]
 }
