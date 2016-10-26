@@ -104,11 +104,12 @@ class TaskInstance {
 
         def requiredOutputs = 0
         def optionalOutputs = 0
+
         for (path in paths) {
             def fileName = path.substring(path.lastIndexOf('/') + 1) // extract fileName from full path
-            this.definition.outputs.eachWithIndex { output, i -> // loop through
+            this.definition.outputs.eachWithIndex { output, i -> // loop through all output definitions
                 if (output.name == fileName) {
-                    if (output.optional) {
+                    if (output.optional) { // Checks if the output is defined as optional
                         optionalOutputs++
                     } else {
                         requiredOutputs++
@@ -134,8 +135,9 @@ class TaskInstance {
         this.process.pendingTasks.remove(this)
         this.process.completedTasks.add(this)
 
+        // Checks if any obligatory task is still pending; Otherwhise, the process can be updated to complete
         if ( !this.process.pendingTasks.any { task -> !(task.definition.optional) } ) {
-            this.process.status = ProcessInstance.STATUS_ALL_TASKS_COMPLETED
+            this.process.status = ProcessInstance.STATUS_ALL_TASKS_COMPLETED // Process complete
         }
 
         Propeller.instance.ds.save(this.process, this)
