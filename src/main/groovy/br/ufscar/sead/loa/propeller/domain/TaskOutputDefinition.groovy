@@ -15,6 +15,7 @@ class TaskOutputDefinition extends Mistakable {
     String type
     String path
     boolean optional
+    boolean shareable
 
     TaskOutputDefinition() {}
 
@@ -22,7 +23,8 @@ class TaskOutputDefinition extends Mistakable {
         this.name = doc.getString('name')
         this.type = doc.getString('type')
         this.path = doc.getString('path')
-        this.optional = doc.getBoolean('optional')
+        this.optional = doc.getBoolean('optional', false)
+        this.shareable = doc.getBoolean('shareable', true)
     }
 
     @Override
