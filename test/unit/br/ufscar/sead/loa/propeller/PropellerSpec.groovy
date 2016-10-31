@@ -69,7 +69,7 @@ class PropellerSpec extends Specification {
         then:
         instance.definition.uri == 'forca'
         instance.ownerId == 1
-        instance.pendingTasks.size() == 3
+        instance.pendingTasks.size() == 4
 
         cleanup:
         propeller.ds.delete(definition)

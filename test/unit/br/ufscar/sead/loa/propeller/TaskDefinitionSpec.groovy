@@ -51,7 +51,6 @@ class TaskDefinitionSpec extends Specification {
         setup:
         def doc
         doc = Document.parse(new File('test/resources/forca.json').text).get('tasks').get(2) as Document
-        doc = Document.parse(doc.toJson().replace('perguntas.json', ''))
         definition = new TaskDefinition(doc)
 
         expect:
@@ -64,11 +63,35 @@ class TaskDefinitionSpec extends Specification {
         setup:
         def doc
         doc = Document.parse(new File('test/resources/forca.json').text).get('tasks').first() as Document
-        doc = Document.parse(doc.toJson().replace('perguntas.json', ''))
         definition = new TaskDefinition(doc)
 
         expect:
         !definition.optional;
+    }
+
+    def "create a task with optional output"() {
+        def definition
+
+        setup:
+        def doc
+        doc = Document.parse(new File('test/resources/forca.json').text).get('tasks').get(3) as Document
+        definition = new TaskDefinition(doc)
+
+        expect:
+        definition.optionalOutputs.size() == 1
+        definition.optionalOutputs.get(0).name == "opcional.json"
+    }
+
+    def "create a task with output required by default"() {
+        def definition
+
+        setup:
+        def doc
+        doc = Document.parse(new File('test/resources/forca.json').text).get('tasks').first() as Document
+        definition = new TaskDefinition(doc)
+
+        expect:
+        definition.optionalOutputs.size() == 0
     }
 
 }

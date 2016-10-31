@@ -89,13 +89,8 @@ class TaskInstance {
      * @return true if the files matches what the task expects or false otherwise.
      */
     boolean complete(String... paths) {
+        // A task can only be completed if it's pending
         if (this.status != STATUS_PENDING) {
-            return false
-        }
-
-        // A task should not be completed with more or less outputs than its definition
-        if (paths.size() != this.definition.outputs.size()) {
-            println 'task ' + this.id + " not completed: paths count != expected"
             return false
         }
 
@@ -107,19 +102,29 @@ class TaskInstance {
             this.outputs.add(null)
         }
 
-        def count = 0
+        def requiredOutputs = 0
+        def optionalOutputs = 0
+
         for (path in paths) {
             def fileName = path.substring(path.lastIndexOf('/') + 1) // extract fileName from full path
-            this.definition.outputs.eachWithIndex { output, i -> // loop through
+            this.definition.outputs.eachWithIndex { output, i -> // loop through all output definitions
                 if (output.name == fileName) {
+                    if (output.optional) { // Checks if the output is defined as optional
+                        optionalOutputs++
+                    } else {
+                        requiredOutputs++
+                    }
                     this.outputs.set(i, new TaskOutputInstance(output, path))
-                    count++
+                } else {
+                    return false
                 }
             }
         }
 
-        // if the number of matched paths is != from the number of expected, the completion should fail
-        if (count != this.definition.outputs.size()) {
+        // All required outputs must have a matching path, otherwise the completion fails
+        // All remaining paths must match with an optional output and must not exceed the
+        // number of optional outputs defined by the task
+        if (requiredOutputs != this.definition.outputs.size() && optionalOutputs <= this.definition.optionalOutputs.size()) {
             this.outputs = null
             println 'task ' + this.id + " not completed: count != expected"
             return false
@@ -130,8 +135,9 @@ class TaskInstance {
         this.process.pendingTasks.remove(this)
         this.process.completedTasks.add(this)
 
+        // Checks if any obligatory task is still pending; Otherwhise, the process can be updated to complete
         if ( !this.process.pendingTasks.any { task -> !(task.definition.optional) } ) {
-            this.process.status = ProcessInstance.STATUS_ALL_TASKS_COMPLETED
+            this.process.status = ProcessInstance.STATUS_ALL_TASKS_COMPLETED // Process complete
         }
 
         Propeller.instance.ds.save(this.process, this)
