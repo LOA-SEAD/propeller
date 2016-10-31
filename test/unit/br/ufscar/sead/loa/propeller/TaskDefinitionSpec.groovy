@@ -91,7 +91,9 @@ class TaskDefinitionSpec extends Specification {
         definition = new TaskDefinition(doc)
 
         expect:
+        definition.outputs.size() == 1
         definition.optionalOutputs.size() == 0
+        !definition.outputs.get(0).optional
     }
 
 }
