@@ -29,6 +29,7 @@ class ProcessDefinition extends Mistakable {
     ObjectId id
     String name
     String uri
+    String type
     int version
 
     @Transient
@@ -47,6 +48,9 @@ class ProcessDefinition extends Mistakable {
     ProcessDefinition(Document doc, long ownerId) {
         this.name = doc.getString("name")
         this.uri = doc.getString("uri")
+        // O valor padrão de type (tipo do projeto), caso este não seja encontrado
+        // no documento, é HTML
+        this.type = doc.getString("type") ? doc.getString("type") : "html"
         this.version = doc.getInteger("version")
         this.active = true
         this.ownerId = ownerId
