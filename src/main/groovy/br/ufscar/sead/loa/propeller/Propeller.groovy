@@ -59,8 +59,8 @@ class Propeller {
             }
 
             client = new MongoClient(new ServerAddress(options.dbHost as String),
-                    Arrays.asList(MongoCredential.createCredential(options.username as String, options.authDb as String,
-                            options.password as char[])))
+                         Arrays.asList(MongoCredential.createCredential(options.username as String, options.authDb as String,
+                                                                        options.password as char[])))
         } else {
             client = new MongoClient()
         }
