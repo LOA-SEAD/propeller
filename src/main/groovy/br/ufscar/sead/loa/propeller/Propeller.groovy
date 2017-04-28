@@ -58,7 +58,7 @@ class Propeller {
                 throw new MissingPropertyException('password is required')
             }
 
-            client = new MongoClient(new ServerAddress(),
+            client = new MongoClient(new ServerAddress(options.dbHost as String),
                     Arrays.asList(MongoCredential.createCredential(options.username as String, options.authDb as String,
                             options.password as char[])))
         } else {
