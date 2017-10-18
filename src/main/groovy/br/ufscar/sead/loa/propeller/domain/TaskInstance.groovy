@@ -105,16 +105,25 @@ class TaskInstance {
         def requiredOutputs = 0
         def optionalOutputs = 0
 
+        // Compare all given files with the expected outputs
         for (path in paths) {
             def fileName = path.substring(path.lastIndexOf('/') + 1) // extract fileName from full path
-            this.definition.outputs.eachWithIndex { output, i -> // loop through all output definitions
+
+            // Loop through all required output definitions
+            this.definition.outputs.eachWithIndex { output, i ->
                 if (output.name == fileName) {
-                    if (output.optional) { // Checks if the output is defined as optional
-                        optionalOutputs++
-                    } else {
-                        requiredOutputs++
-                    }
+                    requiredOutputs++
                     this.outputs.set(i, new TaskOutputInstance(output, path))
+                } else {
+                    return false
+                }
+            }
+
+            // Loop through all optional output definitions
+            this.definition.optionalOutputs.eachWithIndex { output, i ->
+                if (output.name == fileName) {
+                    optionalOutputs++
+                    this.outputs.add(new TaskOutputInstance(output, path))
                 } else {
                     return false
                 }
